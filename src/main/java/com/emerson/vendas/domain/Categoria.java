@@ -1,6 +1,7 @@
 package com.emerson.vendas.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ public class Categoria  implements Serializable {
     private Integer id;
     private String nome;
 
+    @JsonManagedReference  // Serializando os dados da lista de produtos
     @ManyToMany(mappedBy = "categorias")
     private List<Produto> produtos = new ArrayList<>();
 

@@ -1,5 +1,6 @@
 package com.emerson.vendas.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ public class Produto implements Serializable {
     private String nome;
     private Double preco;
 
+    @JsonBackReference //Faz a omissão da lista de categorias para cada produto
     @ManyToMany
     @JoinTable(
             name = "PRODUTO_CATEGORIA",
