@@ -1,13 +1,8 @@
 package com.emerson.vendas;
 
-import com.emerson.vendas.domain.Categoria;
-import com.emerson.vendas.domain.Cidade;
-import com.emerson.vendas.domain.Estado;
-import com.emerson.vendas.domain.Produto;
-import com.emerson.vendas.repositories.CategoriaRepository;
-import com.emerson.vendas.repositories.CidadeRepository;
-import com.emerson.vendas.repositories.EstadoRepository;
-import com.emerson.vendas.repositories.ProdutoRepository;
+import com.emerson.vendas.domain.*;
+import com.emerson.vendas.enums.TipoCLiente;
+import com.emerson.vendas.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -29,6 +24,12 @@ public class VendasApplication implements CommandLineRunner {
 
 	@Autowired
 	private EstadoRepository estadoRepository;
+
+	@Autowired
+	private ClienteRepository clienteRepository;
+
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	public static void main(String[] args) {
 
@@ -73,5 +74,18 @@ public class VendasApplication implements CommandLineRunner {
 
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+
+		Cliente cli1 = new Cliente(null,"Emerson J S Costa", "emersonjscosta@gmail.com",
+				          "36378912377", TipoCLiente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("3332712325","991941234"));
+
+		Endereco e1 = new Endereco(null, "Rua das Carmelitas", "300", "Casa",
+				"Vila Olinda","3420456", cli1,c1);
+
+		Endereco e2 = new Endereco(null, "Rua Castelo Branco", "500", "APT-01",
+				"Estrela Sul","34204345", cli1,c1);
+
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1,e2));
 	}
 }
