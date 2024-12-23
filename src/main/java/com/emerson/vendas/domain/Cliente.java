@@ -1,8 +1,7 @@
 package com.emerson.vendas.domain;
 
 import com.emerson.vendas.enums.TipoCLiente;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -22,7 +21,7 @@ public class Cliente implements Serializable {
 
     private Integer tipo;
 
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos = new ArrayList<>();
 
@@ -31,7 +30,7 @@ public class Cliente implements Serializable {
     // Conjunto de Strings (telefones) não permitindo a repeticao dos dados.
     private Set<String> telefones = new HashSet<>();
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private  List<Pedido> pedidos = new ArrayList<>();
 
