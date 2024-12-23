@@ -1,6 +1,7 @@
 package com.emerson.vendas.domain;
 
 import com.emerson.vendas.enums.TipoCLiente;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -30,6 +31,7 @@ public class Cliente implements Serializable {
     // Conjunto de Strings (telefones) não permitindo a repeticao dos dados.
     private Set<String> telefones = new HashSet<>();
 
+    @JsonBackReference
     @OneToMany(mappedBy = "cliente")
     private  List<Pedido> pedidos = new ArrayList<>();
 
