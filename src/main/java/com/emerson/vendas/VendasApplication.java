@@ -10,7 +10,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -40,15 +39,16 @@ public class VendasApplication implements CommandLineRunner {
 	@Autowired
 	PagamentoRepository pagamentoRepository;
 
+	@Autowired
+	ItemPedidoRepository itemPedidoRepository;
+
 	public static void main(String[] args) {
 
 		SpringApplication.run(VendasApplication.class, args);
 	}
 
 	/*
-	* Essa ação é executada quando a palicação inicia.
-	* A implementação é baseada em instancias que são armazenadas no banco de dados temporário h2.
-	* A implementaçao do código utiliza a Interface Repository para ter acesso ao banco de dados.
+	* Esse  método será executado quando a aplicação spring for iniciada.
 	* */
 	@Override
 	public void run(String... args) throws Exception {
@@ -112,5 +112,11 @@ public class VendasApplication implements CommandLineRunner {
 
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 }
