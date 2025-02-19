@@ -3,10 +3,12 @@ package com.emerson.vendas.resources;
 import com.emerson.vendas.domain.Categoria;
 import com.emerson.vendas.dto.CategoriaDTO;
 import com.emerson.vendas.services.CategoriaService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.data.domain.Page;
 
 import java.net.URI;
 import java.util.List;
@@ -57,6 +59,19 @@ public class CategoriaResource {
 
         List<Categoria> obj = service.findAll();
         List<CategoriaDTO> listDTO = obj.stream().map(CategoriaDTO::new).toList();
+        return ResponseEntity.ok().body(listDTO);
+    }
+
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public ResponseEntity<Page<CategoriaDTO>> findPage(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+            @RequestParam(value = "orderBy", defaultValue = "nome") String orderBy,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+
+        Page<Categoria> obj = service.findPage(page, linesPerPage, orderBy, direction);
+        Page<CategoriaDTO> listDTO = obj.map(CategoriaDTO::new);
+
         return ResponseEntity.ok().body(listDTO);
     }
 
