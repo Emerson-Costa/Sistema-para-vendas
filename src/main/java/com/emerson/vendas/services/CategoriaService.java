@@ -1,6 +1,7 @@
 package com.emerson.vendas.services;
 
 import com.emerson.vendas.domain.Categoria;
+import com.emerson.vendas.dto.CategoriaDTO;
 import com.emerson.vendas.repositories.CategoriaRepository;
 import com.emerson.vendas.services.exceptions.DataIntegrityException;
 import com.emerson.vendas.services.exceptions.ObjectNotFoundException;
@@ -63,6 +64,11 @@ public class CategoriaService {
 
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
+    }
+
+    public Categoria fromDTO(CategoriaDTO objDto) {
+
+        return new Categoria(objDto.getId(), objDto.getNome());
     }
 
 }
