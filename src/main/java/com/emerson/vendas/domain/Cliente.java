@@ -9,6 +9,7 @@ import java.util.*;
 
 @Entity
 public class Cliente implements Serializable {
+
     private final static long serialVersionUID = 1L;
 
     @Id
@@ -21,7 +22,6 @@ public class Cliente implements Serializable {
 
     private Integer tipo;
 
-
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos = new ArrayList<>();
 
@@ -32,7 +32,7 @@ public class Cliente implements Serializable {
 
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")
-    private  List<Pedido> pedidos = new ArrayList<>();
+    private List<Pedido> pedidos = new ArrayList<>();
 
     public Cliente() {
 
@@ -43,7 +43,7 @@ public class Cliente implements Serializable {
         this.nome = nome;
         this.email = email;
         this.cpfOucnpj = cpfOucnpj;
-        this.tipo = tipo.getCod();
+        this.tipo = (tipo == null) ? null : tipo.getCod();
     }
 
     public Integer getId() {
@@ -116,8 +116,12 @@ public class Cliente implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Cliente cliente = (Cliente) o;
         return Objects.equals(id, cliente.id);
     }
